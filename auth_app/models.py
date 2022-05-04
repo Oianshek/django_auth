@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
+from club.models import Club
+
 
 class UserAccountManager(BaseUserManager):
 
@@ -45,8 +47,9 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True)
 
     objects = UserAccountManager()
 
